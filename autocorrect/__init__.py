@@ -4,6 +4,7 @@ import re
 import sys
 import tarfile
 import textwrap
+import itertools
 from contextlib import closing
 from urllib.request import urlretrieve
 
@@ -132,6 +133,32 @@ class Speller:
         )
 
     __call__ = autocorrect_sentence
+
+    def pick_top_words(self, word, top=3):
+        if word == "":
+            return ""
+
+        candidates = self.get_candidates(word)
+
+        # in case the word is capitalized
+        if word[0].isupper():
+            decapitalized = word[0].lower() + word[1:]
+            candidates += self.get_candidates(decapitalized)
+
+        candidates.sort(reverse=True)
+        top_candidates = [candidate[1] for candidate in candidates[:top]]
+
+        if word[0].isupper():
+            top_candidates = [candidate[0].upper()+candidate[1:] for candidate in top_candidates]
+        return top_candidates
+
+    def get_possible_sentences(self, sentence, top=3):
+        word_pairs = []
+        for word in re.finditer(word_regexes[self.lang], sentence):
+            word_pairs.append([(word.group(0), pw) for pw in self.pick_top_words(word.group(0), top=top)])
+        match_dic = [{p[0]:p[1] for p in pair} for pair in itertools.product(*word_pairs)]
+        return [re.sub(word_regexes[self.lang], lambda match: m[match.group(0)], sentence,) for m in match_dic]
+
 
 
 # for backward compatibility

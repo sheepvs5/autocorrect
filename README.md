@@ -11,7 +11,7 @@ Based on: https://github.com/phatpiglet/autocorrect
 
 # Installation
 ```bash
-pip install autocorrect
+pip install git+https://github.com/sheepvs5/autocorrect
 ```
 
 # Examples
@@ -21,9 +21,14 @@ pip install autocorrect
 >>> spell("I'm not sleapy and tehre is no place I'm giong to.")
 "I'm not sleepy and there is no place I'm going to."
 
->>> spell = Speller('pl')
->>> spell('ptaaki latatją kluczmm')
-'ptaki latają kluczem'
+>>> spell = Speller('ennu')
+>>> spell.get_possible_sentences('c1anss: chans arm0r')
+['class: clans armor',
+ 'class: chaos armor',
+ 'class: chang armor',
+ 'clans: clans armor',
+ 'clans: chaos armor',
+ 'clans: chang armor']
 ```
 
 # Speed

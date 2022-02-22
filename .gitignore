@@ -2,6 +2,5 @@
 dist/*
 MANIFEST
 .vscode
-autocorrect/data/*
 .coverage
 .DS_Store

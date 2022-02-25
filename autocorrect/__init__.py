@@ -146,7 +146,10 @@ class Speller:
             candidates += self.get_candidates(decapitalized)
 
         candidates.sort(reverse=True)
-        top_candidates = [candidate[1] for candidate in candidates[:top]]
+        if candidates[0][1]!=word:
+            top_candidates = [word]+ [candidate[1] for candidate in candidates[:top]]
+        else:
+            top_candidates = [candidate[1] for candidate in candidates[:top]]
 
         if word[0].isupper():
             top_candidates = [candidate[0].upper()+candidate[1:] for candidate in top_candidates]

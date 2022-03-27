@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name="autocorrect",
-    version="2.6.2",
+    version="2.6.3",
     python_requires=">=3.6",
     packages=["autocorrect"],
     package_data={"autocorrect": ["data/ennu.tar.gz"]},
